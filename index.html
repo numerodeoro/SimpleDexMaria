@@ -229,10 +229,8 @@
                 // Actualizacion de los valores en el formulario
                 document.getElementById("TKA").value = supplyA.toString();
                 document.getElementById("TKB").value = supplyB.toString();
-                document.getElementById("priceTKA").value = priceTKA.toString();
-                document.getElementById("priceTKB").value = priceTKB.toString();
-                // document.getElementById("priceTKA").value = (priceTKA / BigInt(1e18)).toString();
-                // document.getElementById("priceTKB").value = (priceTKB / BigInt(1e18)).toString();
+                document.getElementById("priceTKA").value = (Number(priceTKA) / 1e18).toFixed(2).toString();
+                document.getElementById("priceTKB").value = (Number(priceTKB) / 1e18).toFixed(2).toString();
             } catch (error) {
                 console.error("Error leyendo los datos del contrato:", error);
             }
