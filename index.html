@@ -341,6 +341,35 @@
             }
         }
 
+        document.getElementById("Add").addEventListener("click", async () => {
+            try {
+                // leo los inputs
+                const amountTKA = document.getElementById("AddTKA").value;
+                const amountTKB = document.getElementById("AddTKB").value;
+
+                // chequeo que sean inputs validos
+                if (amountTKA <= 0 || amountTKB <= 0) {
+                    alert("Por favor, ingresa valores positivos para ambos tokens.");
+                    return;
+                }
+
+                // Convierto a formato de BigNumber
+                const amountTKAInWei = ethers.utils.parseUnits(amountTKA, 18);
+                const amountTKBInWei = ethers.utils.parseUnits(amountTKB, 18);
+
+                // Llamo al contrato
+                const tx = await contract.addLiquidity(amountTKA, amountTKB);
+
+                
+                await tx.wait();
+
+                alert("¡Liquidez agregada exitosamente!");
+            } catch (error) {
+                console.error("Error al agregar liquidez:", error);
+                alert("Hubo un error al intentar agregar liquidez. Por favor, revisa la consola para más detalles.");
+            }
+        });
+
         document.getElementById('btnConnect').addEventListener('click', connectWallet);
         document.getElementById('btnDisconnect').addEventListener('click', disconnectWallet);
         document.getElementById('btnSendETH').addEventListener('click', sendETH);
