@@ -69,10 +69,15 @@
         let provider, signer, address, contract;
 
         // const TOKEN_ADDRESS = "0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8"; //direccion del contrato del token
-        const TOKEN_ADDRESS = "0xb41dA7fb321EBFA7F96dDFc11415F9d4648BCa3A"; //direccion del contrato del token
+        // const TOKEN_ADDRESS = "0xb41dA7fb321EBFA7F96dDFc11415F9d4648BCa3A"; //direccion del contrato del token
+
+        const TKA = "0xBCca05a2124eFd86d26CB9a00D413146DE8fd75f"; //direccion del token A
+        const TKB = "0xb41dA7fb321EBFA7F96dDFc11415F9d4648BCa3A"; //direccion del token B
+        const SD = "0x4e182a96afc6C2A4A1b2772F7B8476eb06D39Db6"; //direccion del pool
 
         async function loadABI() {
-            const response = await fetch('https://gist.githubusercontent.com/veox/8800debbf56e24718f9f483e1e40c35c/raw/f853187315486225002ba56e5283c1dba0556e6f/erc20.abi.json'); //direccion de la ABI del contrato
+            // leo el ABI del pool
+            const response = await fetch(`https://api-sepolia.scrollscan.com/api?module=contract&action=getabi&address=0x4e182a96afc6c2a4a1b2772f7b8476eb06d39db6`); //direccion de la ABI del contrato
             const abi = await response.json();
             return abi;
         }
