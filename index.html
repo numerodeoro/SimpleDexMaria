@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ethers App</title>
+    <link rel="shortcut icon" href="images/favicon-32x32" type="image/phi-icon">
+    <title>Exchange de TKA y TKB</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-sky-100 font-sans">
     <div class="container mx-auto p-6">
-        <h1 class="text-4xl font-bold text-center text-gray-800 mb-6">Intro to Ethers</h1>
+        <h1 class="text-4xl font-bold text-center text-gray-800 mb-6">Exchange de TKA y TKB</h1>
         <div class="text-center">
             <button id="btnConnect"
                 class="bg-blue-300 text-white px-6 py-2 rounded-md hover:bg-blue-400 transition">Conectar
@@ -58,7 +59,7 @@
                 class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition mt-4">Enviar
                 Token</button>
         </div>
-        
+
 
 
     </div>
@@ -75,12 +76,20 @@
         const TKB = "0xb41dA7fb321EBFA7F96dDFc11415F9d4648BCa3A"; //direccion del token B
         const SD = "0x4e182a96afc6C2A4A1b2772F7B8476eb06D39Db6"; //direccion del pool
 
-        async function loadABI() {
+        /*async function loadABI() {
             // leo el ABI del pool
             const response = await fetch('https://gist.githubusercontent.com/veox/8800debbf56e24718f9f483e1e40c35c/raw/f853187315486225002ba56e5283c1dba0556e6f/erc20.abi.json');
             // const response = await fetch(`https://api-sepolia.scrollscan.com/api?module=contract&action=getabi&address=0x4e182a96afc6c2a4a1b2772f7b8476eb06d39db6`); //direccion de la ABI del contrato
             const abi = await response.json();
             return abi;
+        }*/
+
+       async function loadABI() {
+            const response = await fetch('./contractABI.json');
+            if (!response.ok) {
+                throw new Error(`Error al cargar el ABI: ${response.statusText}`);
+            }
+            return await response.json();
         }
 
         async function connectWallet() {
@@ -100,13 +109,22 @@
 
                 const abi = await loadABI();
 
-                contract = new ethers.Contract(TOKEN_ADDRESS, abi, signer);
-                // contract = new ethers.Contract(SD, abi, signer);
+                // contract = new ethers.Contract(TOKEN_ADDRESS, abi, signer);
+                contract = new ethers.Contract(SD, abi, signer);
 
-                const decimals = await contract.decimals();
-                const tokenBalance = await contract.balanceOf(address);
-                const formattedTokenBalance = ethers.formatUnits(tokenBalance, decimals);
-                console.log("🚀 ~ connectWallet ~ formattedTokenBalance:", formattedTokenBalance)
+                // const decimals = await contract.decimals();
+                const decimals = 0;
+                // const tokenBalance = await contract.balanceOf(address);
+                const supplyA = await contract.supplyA();
+                const supplyB = await contract.supplyB();
+                // const formattedTokenBalance = ethers.formatUnits(tokenBalance, decimals);
+                const formattedSupplyA = ethers.formatUnits(supplyA, decimals);
+                const formattedSupplyB = ethers.formatUnits(supplyB, decimals);
+
+
+                // console.log("🚀 ~ connectWallet ~ formattedTokenBalance:", formattedTokenBalance)
+                console.log("🚀 ~ connectWallet ~ supplyA:", formattedSupplyA);
+                console.log("🚀 ~ connectWallet ~ supplyB:", formattedSupplyB);
 
                 document.getElementById('btnConnect').style.display = 'none';
                 document.getElementById('btnDisconnect').style.display = 'inline';
@@ -118,7 +136,8 @@
                 document.getElementById('sendETHFields').style.display = 'block';
 
                 document.getElementById('ethBalance').innerText = `Balance de Wallet: ${formattedBalance} ETH`;
-                document.getElementById('erc20Balance').innerText = `Balance del Token: ${formattedTokenBalance}`;
+                //document.getElementById('erc20Balance').innerText = `Balance del Token: ${formattedTokenBalance}`;
+                document.getElementById('erc20Balance').innerText = `Balance del Token: ${formattedSupplyB}`;
             }
             else {
                 console.error('Metamask not detected');
