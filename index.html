@@ -251,7 +251,7 @@
         });
 
         async function readContractData() {
-            
+
             try {
                 // lectura del contrato
                 const supplyA = await contract.supplyA();
@@ -260,10 +260,10 @@
                 const priceTKB = await contract.getPrice(TKB);
 
                 // Actualizacion de los valores en el formulario
-                document.getElementById("TKA").value = ethers.utils.formatUnits(supplyA, 18);  
-                document.getElementById("TKB").value = ethers.utils.formatUnits(supplyB, 18);  
-                document.getElementById("priceTKA").value = ethers.utils.formatUnits(priceTKA, 18);  
-                document.getElementById("priceTKB").value = ethers.utils.formatUnits(priceTKB, 18);  
+                document.getElementById("TKA").value = supplyA.toString();
+                document.getElementById("TKB").value = supplyB.toString();
+                document.getElementById("priceTKA").value = priceTKA.toString();
+                document.getElementById("priceTKB").value = priceTKB.toString();
             } catch (error) {
                 console.error("Error leyendo los datos del contrato:", error);
             }
