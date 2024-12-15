@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="images/favicon-32x32" type="image/phi-icon">
+    <link rel="shortcut icon" href="images/favicon-32x32.png" type="image/x-icon">
     <title>Exchange de TKA y TKB</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -23,12 +23,37 @@
         <p id="status" class="text-center text-gray-600 mt-4">Estado: Desconectado</p>
 
         <!-- Mostrar balance del token ERC20 -->
-        <p id="erc20Balance" style="display: none;" class="text-center text-xl text-gray-800 mt-6">Balance del Token: 0
-        </p>
+        <!-- <p id="erc20Balance" style="display: none;" class="text-center text-xl text-gray-800 mt-6">Balance del Token: 0
+        </p> -->
         <p id="ethBalance" style="display: none;" class="text-center text-xl text-gray-800 mt-6">Balance de Wallet: 0
             ETH</p>
 
-        <!-- Formulario para enviar ERC20 -->
+
+        <!-- Formulario para leer el pool -->
+        <div id="readContract" style="display:block;" class="bg-white p-6 rounded-lg shadow-md mt-6">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Estado actual del pool</h2>
+
+            <label for="Supply TKA" class="block text-gray-700">Supply TKA:</label>
+            <input type="number" id="TKA" placeholder="oferta de Tokens tipo TKA"
+                class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+            <label for="Supply TKB" class="block text-gray-700 mt-4">Supply TKB:</label>
+            <input type="number" id="TKB" placeholder="oferta de Tokens tipo TKB"
+                class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+            <label for="precio A" class="block text-gray-700 mt-4">Shadow Price TKA:</label>
+            <input type="number" id="priceTKA" placeholder="costo aproximado de 1 TKA"
+                class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+            <label for="precio B" class="block text-gray-700 mt-4">Shadow Price TKB:</label>
+            <input type="number" id="priceTKB" placeholder="costo aproximado de 1 TKB"
+                class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+
+            <button id="Estado"
+                class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition mt-4">Estado del
+                Pool</button>
+        </div>
 
         <div id="sendETHFields" style="display:none;" class="bg-white p-6 rounded-lg shadow-md mt-6">
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">Enviar ETH</h2>
@@ -84,7 +109,7 @@
             return abi;
         }*/
 
-       async function loadABI() {
+        async function loadABI() {
             const response = await fetch('./contractABI.json');
             if (!response.ok) {
                 throw new Error(`Error al cargar el ABI: ${response.statusText}`);
@@ -130,7 +155,7 @@
                 document.getElementById('btnDisconnect').style.display = 'inline';
 
                 document.getElementById('status').innerText = `Estado: Conectado a la cuenta ${address}`;
-                document.getElementById('erc20Balance').style.display = 'block';
+                // document.getElementById('erc20Balance').style.display = 'block';
                 document.getElementById('ethBalance').style.display = 'block';
                 document.getElementById('sendERC20Fields').style.display = 'block';
                 document.getElementById('sendETHFields').style.display = 'block';
