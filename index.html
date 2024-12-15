@@ -22,9 +22,6 @@
         </div>
         <p id="status" class="text-center text-gray-600 mt-4">Status: Disconnected</p>
 
-        <!-- Mostrar balance del token ERC20 -->
-        <!-- <p id="erc20Balance" style="display: none;" class="text-center text-xl text-gray-800 mt-6">Balance del Token: 0
-        </p> -->
         <p id="ethBalance" style="display: none;" class="text-center text-xl text-gray-800 mt-6">Wallet's Balance: 0
             ETH</p>
 
@@ -87,35 +84,7 @@
                 class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition mt-4">Sell</button>
         </div>
 
-        <div id="sendETHFields" style="display:none;" class="bg-white p-6 rounded-lg shadow-md mt-6">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Enviar ETH</h2>
-            <label for="ethRecipientAddress" class="block text-gray-700">Dirección del destinatario:</label>
-            <input type="text" id="ethRecipientAddress" placeholder="Dirección Ethereum"
-                class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-
-            <label for="ethAmount" class="block text-gray-700 mt-4">Monto (ETH):</label>
-            <input type="number" id="ethAmount" placeholder="Monto en ETH"
-                class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-
-            <button id="btnSendETH"
-                class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition mt-4">Enviar
-                ETH</button>
-        </div>
-
-        <div id="sendERC20Fields" style="display:none;" class="bg-white p-6 rounded-lg shadow-md mt-6">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Enviar Token ERC20</h2>
-            <label for="recipientAddress" class="block text-gray-700">Dirección del destinatario:</label>
-            <input type="text" id="recipientAddress" placeholder="Dirección Ethereum"
-                class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-
-            <label for="tokenAmount" class="block text-gray-700 mt-4">Monto (Token):</label>
-            <input type="number" id="tokenAmount" placeholder="Monto en Token"
-                class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-
-            <button id="btnSendERC20"
-                class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition mt-4">Enviar
-                Token</button>
-        </div>
+        <!-- formulario para agregar liquidez -->
 
         <div id="liquidity" style="display:block;" class="bg-white p-6 rounded-lg shadow-md mt-6">
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">Adding Liquidity (only for Investors)</h2>
@@ -143,13 +112,13 @@
 
 
 
-
+        // traigo las direcciones de los contratos
         const TKA = "0xBCca05a2124eFd86d26CB9a00D413146DE8fd75f"; //direccion del token A
         const TKB = "0xb41dA7fb321EBFA7F96dDFc11415F9d4648BCa3A"; //direccion del token B
         const SD = "0x4e182a96afc6C2A4A1b2772F7B8476eb06D39Db6"; //direccion del pool
 
 
-
+        // cargo el ABI del simpledex
         async function loadABI() {
             const response = await fetch('./contractABI.json');
             if (!response.ok) {
@@ -157,7 +126,7 @@
             }
             return await response.json();
         }
-
+        // funcion para conectar la wallet
         async function connectWallet() {
             console.log('Connecting wallet...');
 
@@ -207,7 +176,7 @@
                 console.error('Metamask not detected');
             }
         }
-
+        // funcion para desconectar la wallet
         async function disconnectWallet() {
             provider = null;
             signer = null;
@@ -221,7 +190,7 @@
             document.getElementById('erc20Balance').style.display = 'none';
             document.getElementById('ethBalance').style.display = 'none';
         }
-
+        // funcion de swap A por B
         document.getElementById('btnSellA').addEventListener('click', async () => {
             const addressSellerA = document.getElementById('addressSellerA').value;
             const sellAmountA = document.getElementById('SellAmountA').value;
@@ -230,12 +199,11 @@
                 alert("Por favor, completa todos los campos.");
                 return;
             }
-
-            // función para la venta de TKA
-            await contract.swapAforB(sellAmountA);
+            await contract.swapAforB(sellAmountA); // función para la venta de TKA
             alert("TKA vendidos.");
         });
 
+        // funcion de swap B por A
         document.getElementById('btnSellB').addEventListener('click', async () => {
             const addressSellerB = document.getElementById('addressSellerB').value;
             const sellAmountB = document.getElementById('SellAmountB').value;
@@ -244,12 +212,11 @@
                 alert("Por favor, completa todos los campos.");
                 return;
             }
-
-            // función para la venta de TKB
-            await contract.swapBforA(sellAmountB);
+            await contract.swapBforA(sellAmountB); // función para la venta de TKB
             alert("TKB vendidos.");
         });
 
+        // funciones de lectura del estado del pool
         async function readContractData() {
 
             try {
@@ -264,6 +231,8 @@
                 document.getElementById("TKB").value = supplyB.toString();
                 document.getElementById("priceTKA").value = priceTKA.toString();
                 document.getElementById("priceTKB").value = priceTKB.toString();
+                // document.getElementById("priceTKA").value = (priceTKA / BigInt(1e18)).toString();
+                // document.getElementById("priceTKB").value = (priceTKB / BigInt(1e18)).toString();
             } catch (error) {
                 console.error("Error leyendo los datos del contrato:", error);
             }
@@ -272,75 +241,7 @@
         // Llamar la función de lectura cuando se presiona el botón
         document.getElementById("Estado").addEventListener("click", readContractData);
 
-        async function sendETH() {
-            const recipientAddress = document.getElementById('ethRecipientAddress').value;
-            const amount = document.getElementById('ethAmount').value;
-
-            if (!ethers.isAddress(recipientAddress)) {
-                alert('Dirección de destinatario inválida');
-                return;
-            }
-
-            if (isNaN(amount) || amount <= 0) {
-                alert('Monto inválido');
-                return;
-            }
-
-            try {
-                const tx = {
-                    to: recipientAddress,
-                    value: ethers.parseEther(amount)
-                };
-
-                const txResponse = await signer.sendTransaction(tx);
-
-                await txResponse.wait();
-
-                console.log("🚀 ~ sendETH ~ txResponse", txResponse)
-                alert(`Transacción enviada con éxito: ${txResponse.hash}`);
-
-            } catch (error) {
-                console.error('Error sending ETH', error);
-                alert('Error enviando ETH');
-            }
-
-        }
-
-        async function sendToken() {
-            const recipientAddress = document.getElementById('recipientAddress').value;
-            const amount = document.getElementById('tokenAmount').value;
-
-
-            if (!ethers.isAddress(recipientAddress)) {
-                alert("Dirección inválida.");
-                return;
-            }
-
-            if (isNaN(amount) || amount <= 0) {
-                alert("Monto inválido.");
-                return;
-            }
-
-            try {
-                const decimals = await contract.decimals();
-                const amountToSend = ethers.parseUnits(amount, decimals);
-
-                const txApproval = await contract.approve(recipientAddress, amountToSend);
-                await txApproval.wait();
-
-                const tx = await contract.transfer(recipientAddress, amountToSend);
-
-                await tx.wait();
-
-                console.log("🚀 ~ sendToken ~ tx", tx)
-                alert(`Transacción enviada con éxito: ${tx.hash}`);
-
-            } catch (error) {
-                console.error('Error sending ERC20', error);
-                alert('Error enviando ERC20');
-            }
-        }
-
+        // addLiquidity
         document.getElementById("Add").addEventListener("click", async () => {
             try {
                 // leo los inputs
@@ -360,7 +261,7 @@
                 // Llamo al contrato
                 const tx = await contract.addLiquidity(amountTKA, amountTKB);
 
-                
+
                 await tx.wait();
 
                 alert("¡Liquidez agregada exitosamente!");
