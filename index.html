@@ -166,11 +166,9 @@
 
                 document.getElementById('status').innerText = `Status: Connected to ${address}`;
                 document.getElementById('ethBalance').style.display = 'block';
-                document.getElementById('sendERC20Fields').style.display = 'block';
-                document.getElementById('sendETHFields').style.display = 'block';
-
+                
                 document.getElementById('ethBalance').innerText = `Wallet's Balance: ${formattedBalance} ETH`;
-                document.getElementById('erc20Balance').innerText = `Balance del Token: ${formattedSupplyB}`;
+                
             }
             else {
                 console.error('Metamask not detected');
