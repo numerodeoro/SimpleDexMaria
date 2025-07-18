@@ -6,3 +6,6 @@ este codigo es el frontend para poder operar en el pool
 a traves de metamask
 tkb 0x73bC17e00f650Ad3c78B6fB829196bb09Df56712
 
+simpledex 0xC72957998b3bd1Bcda68056b119EB29791Af98CD
+
+tka 
