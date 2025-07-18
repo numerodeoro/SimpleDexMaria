@@ -22,7 +22,7 @@ El proyecto incluye los contratos inteligentes y la interfaz web.
 ### 0xC72957998b3bd1Bcda68056b119EB29791Af98CD
 
 ## 🌐 Sitio desplegado en Netlify
-👉 Abrir aplicación en Netlify [netlify](https://delicate-horse-29142e.netlify.app/)
+👉 Abrir aplicación en [Netlify](https://delicate-horse-29142e.netlify.app/)
 
 Si tenés instalada MetaMask y estás conectado a Scroll Sepolia, vas a poder ver los saldos y los precios relativos. No vas a poder hacer transacciones dado que no tenés mis súper exclusivos Token María ;)
 
