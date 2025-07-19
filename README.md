@@ -18,8 +18,8 @@ El proyecto incluye los contratos inteligentes y la interfaz web.
 ### Token B (TKB):
 0x73bC17e00f650Ad3c78B6fB829196bb09Df56712
 
-## 💧 SimpleDex (pool):
-### 0xC72957998b3bd1Bcda68056b119EB29791Af98CD
+### 💧 SimpleDex (pool):
+0xC72957998b3bd1Bcda68056b119EB29791Af98CD
 
 ## 🌐 Sitio desplegado en Netlify
 👉 Abrir aplicación en [Netlify](https://delicate-horse-29142e.netlify.app/)
@@ -27,9 +27,9 @@ El proyecto incluye los contratos inteligentes y la interfaz web.
 Si tenés instalada MetaMask y estás conectado a Scroll Sepolia, vas a poder ver los saldos y los precios relativos. No vas a poder hacer transacciones dado que no tenés mis súper exclusivos Token María ;)
 
 ## ✨ Notas finales
-Este fue uno de mis primeros proyectos fullstack web3, hecho de manera completamente autónoma.
+Este fue uno de mis primeros proyectos fullstack web3, hecho de manera autónoma.
 Tiene como objetivo demostrar cómo conectar un contrato inteligente personalizado con un frontend liviano, sin frameworks ni dependencias innecesarias.
 
-📷 Captura de pantalla
+## 📷 Captura de pantalla
 <img width="1255" height="890" alt="image" src="https://github.com/user-attachments/assets/eabb9cd0-2305-4235-ab93-78534d6ec04c" />
 
